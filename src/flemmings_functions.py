@@ -129,3 +129,29 @@ def load_mapping_dbs(file_path_tables: str) -> Dict[str, MappingDB]:
 
     print(f"Erstellte MappingDB-Objekte: {len(mapping_dbs)}")
     return mapping_dbs
+
+def print_question_answer_mapping(qam: QuestionAnswerMapping):
+    print(f"db_id: {qam.db_id}")
+    print(f"spider_question: {qam.spider_question}")
+    print(f"spider_syn_question: {qam.spider_syn_question}")
+    print(f"query: {qam.query}")
+    print(f"generated_query: {qam.generated_query}")
+    print(f"spider_syn_embedding: {qam.spider_syn_embedding}")
+
+def print_mappingdb(mapping_db: MappingDB):
+    """
+    Gibt die Struktur eines MappingDB-Objekts aus.
+    """
+    print(f"db_id: {mapping_db.db_id}\n")
+    print("Table Mappings:")
+    for table in mapping_db.table_mappings:
+        print(f"\tTable Name: {table.table_name}")
+        print(f"\tOriginal Table Name: {table.original_table_name}")
+    print("\nColumn Mappings:")
+    for column in mapping_db.column_mappings:
+        print(f"\tColumn Name: {column.column_name}")
+        print(f"\tOriginal Column Name: {column.original_column_name}")
+    print(f"\nTable Embeddings: {list(mapping_db.table_embeddings.keys())}")
+    print(f"Column Embeddings: {list(mapping_db.column_embeddings.keys())}")
+
+

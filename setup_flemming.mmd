@@ -1,0 +1,41 @@
+classDiagram
+    class QuestionAnswerMapping {
+      - db_id : str
+      - spider_question : str
+      - spider_syn_question : str
+      - query : str
+      - generated_query : Optional[str]
+      - spider_syn_embedding : Optional[np.ndarray]
+    }
+
+    class TableMapping {
+      - table_name : str
+      - original_table_name : str
+    }
+
+    class ColumnMapping {
+      - table_name : str
+      - column_name : str
+      - original_column_name : str
+    }
+
+    class MappingDB {
+      - db_id : str
+      - table_mappings : List[TableMapping]
+      - column_mappings : List[ColumnMapping]
+      - table_embeddings : Dict[str, np.ndarray]
+      - column_embeddings : Dict[str, np.ndarray]
+      + add_table_embedding(table_name, embedding)
+      + add_column_embedding(column_name, embedding)
+    }
+
+    class SpiderDatabase {
+      - db_path : str
+      - connection : sqlite3.Connection
+      + query(sql_query)
+      + close()
+    }
+
+    MappingDB "1" *-- "*" TableMapping : contains
+    MappingDB "1" *-- "*" ColumnMapping : contains
+    QuestionAnswerMapping ..> MappingDB : "references db_id"
